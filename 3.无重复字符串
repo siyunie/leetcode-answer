@@ -1,0 +1,18 @@
+/*滑动窗口思想
+用map维持一个滑动窗口，记录end下标的char和index+1，此处的index+1是为了重复时从重复字符的下一个字符重新开始计数*/
+import java.util.HashMap;
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //滑动窗口
+        HashMap<Character,Integer> map=new HashMap<>();
+        int max=0;
+        for(int start=0,end=0;end<s.length();end++){
+            if(map.containsKey(s.charAt(end))){
+                start=Math.max(start,map.get(s.charAt(end)));//取start和map中存在值的最大值，能确保start一直往后递增，一直比较滑动窗口内的相同字符
+            }
+            max=Math.max(end-start+1,max);
+            map.put(s.charAt(end),end+1);
+        }
+        return max;
+    }
+}
